@@ -163,12 +163,14 @@ void    myIDirect3DDevice9::GetGammaRamp(UINT iSwapChain,D3DGAMMARAMP* pRamp)
 
 HRESULT myIDirect3DDevice9::CreateTexture(UINT Width,UINT Height,UINT Levels,DWORD Usage,D3DFORMAT Format,D3DPOOL Pool,IDirect3DTexture9** ppTexture,HANDLE* pSharedHandle)
 {
+	int targetWidth = 2560;
+	int targetHeight = 1440;
 	//entire game window???? lord knows (Width = your_native_res+256)
-	if (Usage == D3DUSAGE_RENDERTARGET && Width == 1280) { Width = 2812; Height = 1440; }
+	if (Usage == D3DUSAGE_RENDERTARGET && Width == 1280) { Width = targetWidth+256; Height = targetHeight; }
 	//main game area (non-menu)
-	if (Usage == D3DUSAGE_RENDERTARGET && Width == 1024) { Width = 2560; Height = 1440; }
+	if (Usage == D3DUSAGE_RENDERTARGET && Width == 1024) { Width = targetWidth; Height = targetHeight; }
 	//stencil
-	if (Usage == D3DUSAGE_DEPTHSTENCIL && Width == 1024) { Width = 2560; Height = 1440; }
+	if (Usage == D3DUSAGE_DEPTHSTENCIL && Width == 1024) { Width = targetWidth; Height = targetHeight; }
 
     return(m_pIDirect3DDevice9->CreateTexture(Width,Height,Levels,Usage,Format,Pool,ppTexture,pSharedHandle));
 }
